@@ -57,7 +57,6 @@ class _Selected_ServiceState extends State<Selected_Service> {
     super.dispose();
   }
 
- 
   Widget buildMediaItem(Map item) {
     if (item["type"] == "image") {
       return Image.asset(
@@ -102,7 +101,6 @@ class _Selected_ServiceState extends State<Selected_Service> {
     return Scaffold(
       body: Stack(
         children: [
-        
           SizedBox(
             height: widget.imageheight.toDouble(),
             width: double.infinity,
@@ -117,7 +115,7 @@ class _Selected_ServiceState extends State<Selected_Service> {
               },
             ),
           ),
-      
+
           Positioned(
             top: 50,
             left: 16,
@@ -136,8 +134,7 @@ class _Selected_ServiceState extends State<Selected_Service> {
               ),
             ),
           ),
-      
-          
+
           Positioned(
             top: 430,
             left: 5,
@@ -161,8 +158,7 @@ class _Selected_ServiceState extends State<Selected_Service> {
               ),
             ),
           ),
-      
-       
+
           Container(
             margin: EdgeInsets.only(top: widget.imageheight - 30),
             padding: const EdgeInsets.all(20),
@@ -174,8 +170,7 @@ class _Selected_ServiceState extends State<Selected_Service> {
                 topRight: Radius.circular(25),
               ),
             ),
-      
-         
+
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -187,14 +182,14 @@ class _Selected_ServiceState extends State<Selected_Service> {
                   ),
                 ),
                 const SizedBox(height: 10),
-      
+
                 Text(
                   widget.description,
                   style: GoogleFonts.poppins(fontSize: 14),
                 ),
-      
+
                 const SizedBox(height: 20),
-      
+
                 Text(
                   "Customer rating:",
                   style: GoogleFonts.poppins(
@@ -203,7 +198,7 @@ class _Selected_ServiceState extends State<Selected_Service> {
                   ),
                 ),
                 const SizedBox(height: 5),
-      
+
                 Row(
                   children: List.generate(
                     5,
@@ -212,18 +207,14 @@ class _Selected_ServiceState extends State<Selected_Service> {
                       child: CircleAvatar(
                         radius: 10,
                         backgroundColor: Color(0xFFDC6803),
-                        child: Icon(
-                          Icons.star,
-                          color: Colors.white,
-                          size: 15,
-                        ),
+                        child: Icon(Icons.star, color: Colors.white, size: 15),
                       ),
                     ),
                   ),
                 ),
-      
+
                 SizedBox(height: 15.h),
-      
+
                 Text(
                   "£15.30",
                   style: GoogleFonts.poppins(
@@ -231,10 +222,10 @@ class _Selected_ServiceState extends State<Selected_Service> {
                     fontSize: 24.sp,
                   ),
                 ),
-      
+
                 const SizedBox(height: 20),
                 Spacer(),
-      
+
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -268,7 +259,7 @@ class _Selected_ServiceState extends State<Selected_Service> {
                     ),
                   ),
                 ),
-      
+
                 SizedBox(height: 20.h),
               ],
             ),
