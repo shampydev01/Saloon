@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/Screens/feedback.dart';
-import 'package:flutter_application_2/Screens/portfolio.dart';
+import 'package:flutter_application_2/ClientScreens/Appoinments.dart';
+import 'package:flutter_application_2/ClientScreens/Profile.dart';
+import 'package:flutter_application_2/ClientScreens/completedappointments.dart';
+import 'package:flutter_application_2/ClientScreens/portfolio.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'Screens/customerHomescreen.dart';
+import 'ClientScreens/customerHomescreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child:  feedbackscreen(),
+      child:  Customerhomescreen(),
     );
   }
 }

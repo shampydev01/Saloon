@@ -19,13 +19,13 @@ class _Service_RowState extends State<Service_Row> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildServiceCard('Haircut', 'Images/hairstyle.png'),
+            _buildServiceCard('Haircut', 'Assets/Images/hairstyle.png'),
             SizedBox(width: 10.w),
-            _buildServiceCard('Facial', 'Images/nail.png'),
+            _buildServiceCard('Nail styling', 'Assets/Images/nail.png'),
             SizedBox(width: 10.w),
-            _buildServiceCard('Facial', 'Images/beard.png'),
+            _buildServiceCard('Facial', 'Assets/Images/beard.png'),
             SizedBox(width: 10.w),
-            _buildServiceCard('Haircut', 'Images/hairstyle.png'),
+            _buildServiceCard('Beard', 'Assets/Images/hairstyle.png'),
           ],
         ),
       ),

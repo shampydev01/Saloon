@@ -1,0 +1,280 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:video_player/video_player.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'Selected_Date.dart';
+
+class Selected_Service extends StatefulWidget {
+  final String imagePath;
+  final String Servicename;
+  final String description;
+  final int imageheight;
+
+  const Selected_Service({
+    super.key,
+    required this.imagePath,
+    required this.Servicename,
+    required this.imageheight,
+    required this.description,
+  });
+
+  @override
+  State<Selected_Service> createState() => _Selected_ServiceState();
+}
+
+class _Selected_ServiceState extends State<Selected_Service> {
+  final PageController _pageController = PageController();
+  int _currentIndex = 0;
+
+  late VideoPlayerController _videoController;
+
+  List<Map<String, dynamic>> mediaList = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    mediaList = [
+      {"type": "image", "path": widget.imagePath},
+      {"type": "image", "path": "Assets/Images/wet.jpg"},
+      {"type": "image", "path": "Assets/Images/STRAIGHT.jpg"},
+      {"type": "video", "path": "Assets/Videos/BlackVideo.mp4"},
+    ];
+
+    _videoController =
+        VideoPlayerController.asset("Assets/Videos/BlackVideo.mp4")
+          ..initialize().then((_) {
+            setState(() {});
+          });
+
+    _videoController.play();
+  }
+
+  @override
+  void dispose() {
+    _videoController.dispose();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+ 
+  Widget buildMediaItem(Map item) {
+    if (item["type"] == "image") {
+      return Image.asset(
+        item["path"],
+        width: double.infinity,
+        height: widget.imageheight.toDouble(),
+        fit: BoxFit.cover,
+      );
+    } else {
+      return _videoController.value.isInitialized
+          ? AspectRatio(
+              aspectRatio: _videoController.value.aspectRatio,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  VideoPlayer(_videoController),
+                  IconButton(
+                    icon: Icon(
+                      _videoController.value.isPlaying
+                          ? Icons.pause_circle
+                          : Icons.play_circle,
+                      size: 50,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _videoController.value.isPlaying
+                            ? _videoController.pause()
+                            : _videoController.play();
+                      });
+                    },
+                  ),
+                ],
+              ),
+            )
+          : const Center(child: CircularProgressIndicator());
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+        
+          SizedBox(
+            height: widget.imageheight.toDouble(),
+            width: double.infinity,
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: mediaList.length,
+              onPageChanged: (index) {
+                setState(() => _currentIndex = index);
+              },
+              itemBuilder: (context, index) {
+                return buildMediaItem(mediaList[index]);
+              },
+            ),
+          ),
+      
+          Positioned(
+            top: 50,
+            left: 16,
+            child: CircleAvatar(
+              radius: 13,
+              backgroundColor: Colors.white.withOpacity(0.8),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: Colors.black,
+                  size: 10,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ),
+      
+          
+          Positioned(
+            top: 430,
+            left: 5,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                mediaList.length,
+                (index) => AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  width: _currentIndex == index ? 12 : 8,
+                  height: _currentIndex == index ? 12 : 8,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _currentIndex == index
+                        ? Colors.white
+                        : Colors.white.withOpacity(0.5),
+                  ),
+                ),
+              ),
+            ),
+          ),
+      
+       
+          Container(
+            margin: EdgeInsets.only(top: widget.imageheight - 30),
+            padding: const EdgeInsets.all(20),
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ),
+            ),
+      
+         
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.Servicename,
+                  style: GoogleFonts.poppins(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+      
+                Text(
+                  widget.description,
+                  style: GoogleFonts.poppins(fontSize: 14),
+                ),
+      
+                const SizedBox(height: 20),
+      
+                Text(
+                  "Customer rating:",
+                  style: GoogleFonts.poppins(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 5),
+      
+                Row(
+                  children: List.generate(
+                    5,
+                    (i) => const Padding(
+                      padding: EdgeInsets.only(right: 5),
+                      child: CircleAvatar(
+                        radius: 10,
+                        backgroundColor: Color(0xFFDC6803),
+                        child: Icon(
+                          Icons.star,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+      
+                SizedBox(height: 15.h),
+      
+                Text(
+                  "£15.30",
+                  style: GoogleFonts.poppins(
+                    color: Color(0xFF01ABAB),
+                    fontSize: 24.sp,
+                  ),
+                ),
+      
+                const SizedBox(height: 20),
+                Spacer(),
+      
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => Selected_Date(
+                            imagePath: widget.imagePath,
+                            Servicename: widget.Servicename,
+                            description: widget.description,
+                            imageheight: widget.imageheight,
+                          ),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      backgroundColor: const Color(0xFF01ABAB),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Text(
+                      "Book Services",
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                  ),
+                ),
+      
+                SizedBox(height: 20.h),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
